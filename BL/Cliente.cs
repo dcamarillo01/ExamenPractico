@@ -13,16 +13,13 @@ namespace BL
         private List<ML.Cliente>? clientes = [
 
         new ML.Cliente {
-
             IdCliente = 1,
             Cuenta = new ML.CuentaBancaria{
                 IdCuenta = 1,
                 Saldo = 1200
             },
             Nombre = "Cliente01"
-
         },
-
         new ML.Cliente
         {
 
@@ -32,26 +29,19 @@ namespace BL
                 Saldo = 1200
             },
             Nombre = "Cliente02"
-
-
         },
-
         new ML.Cliente
         {
-
             IdCliente = 1,
             Cuenta = new ML.CuentaBancaria {
                 IdCuenta = 01,
                 Saldo = 1200
             },
             Nombre = "Cliente03"
-
-
         }
         ];
 
-        private List<ML.Cliente>? clientesVacia;
-
+        private List<ML.Cliente>? clientesVacia = new List<ML.Cliente>();
 
         public ML.Result GetClientes()
         {
@@ -61,7 +51,7 @@ namespace BL
             try
             {
 
-                if (clientes != null)
+                if (clientesVacia.Count >  0)
                 {
 
                     result.Correct = true;
