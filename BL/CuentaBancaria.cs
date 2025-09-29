@@ -114,7 +114,7 @@ namespace BL
             if (cuenta != null) {
                 if (monto > Saldo)
                 {
-                    throw new BL.Exepciones.SaldoInsuficienteException("");
+                    throw new BL.Exepciones.SaldoInsuficienteException("Saldo insuficiente para esta cuenta.");
 
                 }
                 else
