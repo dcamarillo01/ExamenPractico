@@ -25,7 +25,7 @@ namespace SL_REST.Controllers
             var result = _cuentaBancaria.Depositar(idCuenta, monto);
             if (result.Correct)
             {
-                return Ok( new { Deposito = result.Object});
+                return Ok(new { Deposito = result.Object });
             }
             else
             {
@@ -44,14 +44,9 @@ namespace SL_REST.Controllers
 
             var result = _cuentaBancaria.Retirar(idCuenta, monto);
 
-            if (result.Correct)
-            {
-                return Ok(new { SaldoRestante = result.Object });
-            }
-            else
-            {
-                return BadRequest(new { ERROR = result.ex.Message });
-            }
+
+            return Ok(new { SaldoRestante = result.Object });
+
 
 
         }
@@ -67,7 +62,7 @@ namespace SL_REST.Controllers
             var result = _cuentaBancaria.Maximo(saldo);
             if (result.Correct)
             {
-                return Ok( new { Maximo = result.Object});
+                return Ok(new { Maximo = result.Object });
 
             }
             else

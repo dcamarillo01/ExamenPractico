@@ -46,16 +46,16 @@ namespace BL
         public ML.Result GetClientes()
         {
 
-
             var result = new ML.Result();
             try
             {
 
-                if (clientesVacia.Count >  0)
+                result.Objects = new List<object>();
+                if (clientes.Count > 0)
                 {
 
                     result.Correct = true;
-                    result.Object = clientes;
+                    result.Objects.AddRange(clientes);
                 }
                 else
                 {
@@ -72,8 +72,6 @@ namespace BL
                 result.ex = ex;
 
             }
-
-
 
             return result;
         }

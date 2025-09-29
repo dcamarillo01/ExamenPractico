@@ -25,15 +25,13 @@ namespace SL_REST.Controllers
         [HttpGet]
         [Route("/clientes")]
         [Authorize]
-        //6. Implementa en ASP.NET Core un endpoint GET/clientes que devuelva una
-        //lista fija de clientes en JSON(puedes integrarlo en el ejercicio del final).
         public IActionResult GetClientes()
         {
 
             var result = _cliente.GetClientes();
-            if (result.Correct)
+            if (result.Correct && result.Objects.Count > 0)
             {
-                return Ok(result.Object);
+                return Ok(result.Objects);
             }
             else
             {

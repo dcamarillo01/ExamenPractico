@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ML;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,17 +15,37 @@ namespace BL
     {
 
         private static decimal Saldo { get; set; } = 200;
+
+        private List<ML.CuentaBancaria>? cuentas = [
+        
+        new ML.CuentaBancaria{
+                IdCuenta = 1,
+                Saldo = 1800
+            },
+        new ML.CuentaBancaria {
+                IdCuenta = 2,
+                Saldo = 700
+            },
+       new ML.CuentaBancaria {
+                IdCuenta = 3,
+                Saldo = 250
+       }
+       ];
+
+
         public ML.Result Depositar(int idCuenta, decimal monto)
         {
 
             var result = new ML.Result();
+            var cuenta = cuentas.FirstOrDefault(m => m.IdCuenta == idCuenta);
 
-            if (idCuenta == 1)
+
+            if (cuenta != null)
             {
-                Saldo += monto;
+                cuenta.Saldo += monto;
                 //Si no salata exception 
                 result.Correct = true;
-                result.Object = Saldo;
+                result.Object = cuenta;
             }
             else
             {
@@ -37,30 +58,75 @@ namespace BL
             return result;
         }
 
-        public void Consultar()
+        public ML.Result crearCuenta(decimal SaldoInicial) {
+
+            var result = new ML.Result();
+
+            if (SaldoInicial > 50)
+            {
+
+                var numeroCuentas = cuentas.Count();
+                var nuevaCuenta = new ML.CuentaBancaria
+                {
+                    IdCuenta = numeroCuentas + 1,
+                    Saldo = SaldoInicial
+                };
+                cuentas.Add(nuevaCuenta);
+                result.Correct = true;
+                result.Object = nuevaCuenta;
+            }
+            else {
+
+                result.Correct = false;
+                result.ErrorMessage = "Para abrir una cuenta tienes que hacer un deposito mayor a 50";
+            }
+
+            return result;
+
+        }
+
+        public ML.Result Consultar(int IdCuenta)
         {
 
-            Console.WriteLine(Saldo);
+            var result = new ML.Result();
+            var cuenta = cuentas.FirstOrDefault(m => m.IdCuenta == IdCuenta);
+
+            if (cuenta != null)
+            {
+                result.Correct = true;
+                result.Object = cuenta;
+            }
+            else {
+                result.Correct = false;
+                result.ErrorMessage = "No se encontro cuenta";
+            }
+
+            return result;
         }
 
         public ML.Result Retirar(int idCuenta, decimal monto)
         {
 
             var result = new ML.Result();
+            var cuenta = cuentas.FirstOrDefault(m => m.IdCuenta == idCuenta);
 
 
-            if (monto > Saldo)
-            {
-                result.Correct = false;
-                result.ErrorMessage = "Saldo insuficiente";
-                result.ex = new BL.Exepciones.SaldoInsuficienteException("Tu saldo es insuficiente");
+            if (cuenta != null) {
+                if (monto > Saldo)
+                {
+                    throw new BL.Exepciones.SaldoInsuficienteException("");
 
+                }
+                else
+                {
+                    cuenta.Saldo -= monto;
+                    result.Correct = true;
+                    result.Object = cuenta;
+                }
             }
-            else
-            {
-                Saldo -= monto;
-                result.Correct = true;
-                result.Object = Saldo;
+            else {
+                result.Correct = false;
+                result.ErrorMessage = "No se encontro cuenta";
             }
 
 
