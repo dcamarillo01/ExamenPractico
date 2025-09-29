@@ -22,35 +22,20 @@ namespace BL
 
             var result = new ML.Result();
 
-            try
+            if (idCuenta == 1)
             {
-
-                if (idCuenta == 1)
-                {
-                    Saldo += monto;
-                    //Si no salata exception 
-                    result.Correct = true;
-                    result.Object = Saldo;
-                }
-                else
-                {
-
-                    result.Correct = false;
-                    result.ErrorMessage = "Cuenta no encontrada";
-
-                }
-
-
+                Saldo += monto;
+                //Si no salata exception 
+                result.Correct = true;
+                result.Object = Saldo;
             }
-            catch (Exception ex)
+            else
             {
 
                 result.Correct = false;
-                result.ErrorMessage = ex.Message;
-                result.ex = ex;
+                result.ErrorMessage = "Cuenta no encontrada";
 
             }
-
 
             return result;
         }
