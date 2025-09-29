@@ -13,7 +13,7 @@ namespace BL
     public class CuentaBancaria
     {
 
-        private static decimal Saldo { get; set; }
+        private static decimal Saldo { get; set; } = 200;
         public ML.Result Depositar(int idCuenta, decimal monto)
         {
 
